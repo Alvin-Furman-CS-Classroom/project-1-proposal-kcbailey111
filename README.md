@@ -87,11 +87,11 @@ _A timeline showing that each module's prerequisites align with the course sched
 
 | Module | Required Topic(s) | Topic Covered By | Development Time | Checkpoint Due |
 | ------ | ----------------- | ---------------- | ---------------- | -------------- |
-| 1      | Search (A*, Beam Search) | Week 1-2 of course | 2-3 weeks | Checkpoint 1 |
-| 2      | NLP (Sentiment Analysis) | Week 4-6 of course | 2-3 weeks | Checkpoint 2 |
-| 3      | Propositional Logic (Knowledge Bases, Inference) | Week 2-4 of course | 2-3 weeks | Checkpoint 3 |
-| 4      | Knowledge Representation, Constraint Satisfaction | Week 5-7 of course | 2-3 weeks | Checkpoint 4 |
-| 5      | Explainable AI, Knowledge Representation | Week 8-10 of course | 2-3 weeks | Checkpoint 5 |
+| 1      | Search (A*, Beam Search) | Week 1-2 of course | 2-3 weeks | Checkpoint 1 (Feb 11) |
+| 2      | NLP (Sentiment Analysis) | Week 4-6 of course | 2-3 weeks | Checkpoint 2 (Feb 26) |
+| 3      | Propositional Logic (Knowledge Bases, Inference) | Week 2-4 of course | 2-3 weeks | Checkpoint 3 (March 19) |
+| 4      | Knowledge Representation, Constraint Satisfaction | Week 5-7 of course | 2-3 weeks | Checkpoint 4 (April 2) |
+| 5      | Explainable AI, Knowledge Representation | Week 8-10 of course | 2-3 weeks | Checkpoint 5 (April 16) |
 
 ## Coverage Rationale
 
