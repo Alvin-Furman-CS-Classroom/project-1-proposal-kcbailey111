@@ -83,11 +83,13 @@ The system operates through five integrated modules: a search module that retrie
 
 _A timeline showing that each module's prerequisites align with the course schedule. Verify that you are not planning to implement content before it is taught._
 
+**Note: Modules are ordered by dependency relationships (1→2→3→4→5), not by when topics are taught in the course.**
+
 | Module | Required Topic(s) | Topic Covered By | Development Time | Checkpoint Due |
 | ------ | ----------------- | ---------------- | ---------------- | -------------- |
-| 3      | Propositional Logic (Knowledge Bases, Inference) | Week 2-4 of course | 2-3 weeks | Checkpoint 3 |
 | 1      | Search (A*, Beam Search) | Week 1-2 of course | 2-3 weeks | Checkpoint 1 |
 | 2      | NLP (Sentiment Analysis) | Week 4-6 of course | 2-3 weeks | Checkpoint 2 |
+| 3      | Propositional Logic (Knowledge Bases, Inference) | Week 2-4 of course | 2-3 weeks | Checkpoint 3 |
 | 4      | Knowledge Representation, Constraint Satisfaction | Week 5-7 of course | 2-3 weeks | Checkpoint 4 |
 | 5      | Explainable AI, Knowledge Representation | Week 8-10 of course | 2-3 weeks | Checkpoint 5 |
 
