@@ -58,23 +58,23 @@ The system operates through five integrated modules: a search module that retrie
 
 **Output:** Validated and formatted trading orders: `{order_id: "ORD001", action: "buy", stock: "AAPL", quantity: 10, price_limit: null, timestamp: "2024-01-15T10:30:00", status: "approved"}` or `{order_id: "ORD002", action: "buy", stock: "MSFT", quantity: 0, status: "rejected", reason: "insufficient_funds"}`. The module ensures all orders meet financial and operational constraints before finalization.
 
-**Integration:** This module acts as a safety layer between the logic engine and execution. It validates that recommendations from Module 3 are executable (sufficient funds, within trading hours, meet confidence thresholds) and formats them into standardized order structures. Validated orders are passed to Module 5 for reporting and visualization, completing the decision pipeline.
+**Integration:** This module applies constraint satisfaction techniques to validate trading recommendations against operational and financial constraints (sufficient funds, trading hours, position limits, confidence thresholds). It also employs knowledge representation to encode trading order structures and constraint relationships in a formal, machine-readable format. The validation process solves a constraint satisfaction problem: finding valid order configurations that satisfy all operational constraints. Validated orders are passed to Module 5 for reporting and visualization, completing the decision pipeline.
 
-**Prerequisites:** Course content on Knowledge Representation and constraint satisfaction. Requires Module 3 output as input.
+**Prerequisites:** Course content on Knowledge Representation (encoding information structures) and Constraint Satisfaction (constraint propagation, backtracking). Requires Module 3 output as input.
 
 ---
 
 ### Module 5: Trading Results Reporter
 
-**Topics:** Data Visualization, Information Presentation
+**Topics:** Explainable AI, Knowledge Representation
 
-**Input:** Validated trading orders from Module 4: `[{order_id: "ORD001", action: "buy", stock: "AAPL", quantity: 10, status: "approved", ...}, ...]`. Also receives historical context: sentiment scores from Module 2, logic reasoning traces from Module 3, and order execution results.
+**Input:** Validated trading orders from Module 4: `[{order_id: "ORD001", action: "buy", stock: "AAPL", quantity: 10, status: "approved", ...}, ...]`. Also receives historical context: sentiment scores from Module 2, logic reasoning traces from Module 3 (including which rules fired), and order execution results.
 
-**Output:** Formatted reports and visualizations. Text report format: `{summary: "Generated 3 buy orders, 1 sell order", orders: [...], sentiment_summary: {...}, risk_assessment: "moderate"}`. Visualization outputs include charts (sentiment trends over time, order distribution by stock, confidence scores) and tables (order history, sentiment breakdowns). Output formats: JSON for programmatic access, HTML/PDF for human-readable reports.
+**Output:** Explanatory reports that justify AI decisions. Text report format: `{summary: "Generated 3 buy orders, 1 sell order", orders: [...], decision_explanations: [{stock: "AAPL", action: "buy", triggered_rules: ["high_optimism"], sentiment_evidence: {...}}], risk_assessment: "moderate"}`. The module generates explanations showing which logic rules fired, what sentiment signals triggered decisions, and how inputs led to outputs. Output formats: JSON for programmatic access, structured text/HTML for human-readable explanations.
 
-**Integration:** This module provides the user interface layer of the system, presenting the results of the entire pipeline in an interpretable format. It aggregates data from Modules 2, 3, and 4 to create comprehensive reports that explain why trading decisions were made, what sentiment signals triggered them, and what the expected outcomes are. This completes the feedback loop, allowing users to understand and refine the system's decision-making process.
+**Integration:** This module implements explainable AI principles by generating interpretable explanations of the system's decision-making process. It uses knowledge representation techniques to structure explanations (tracing logic rule applications, sentiment analysis results, and decision rationale) in a formal, queryable format. The module aggregates data from Modules 2, 3, and 4 to create comprehensive reports that explain why trading decisions were made, what sentiment signals triggered them, and what the expected outcomes are. This completes the feedback loop, allowing users to understand and refine the system's decision-making process.
 
-**Prerequisites:** Course content on data visualization and information presentation. Requires outputs from Modules 2, 3, and 4.
+**Prerequisites:** Course content on Explainable AI (interpretability, decision transparency) and Knowledge Representation (structured information presentation). Requires outputs from Modules 2, 3, and 4.
 
 ---
 
@@ -83,16 +83,18 @@ The system operates through five integrated modules: a search module that retrie
 
 _A timeline showing that each module's prerequisites align with the course schedule. Verify that you are not planning to implement content before it is taught._
 
-| Module | Required Topic(s) | Topic Covered By | Checkpoint Due |
-| ------ | ----------------- | ---------------- | -------------- |
-| 1      | Search (A*, Beam Search) | Early in course (Checkpoint 1 timeframe) | Checkpoint 1 |
-| 2      | NLP (Sentiment Analysis) | Mid-course (Checkpoint 2-3 timeframe) | Checkpoint 2 |
-| 3      | Propositional Logic (Knowledge Bases, Inference) | Early-mid course (Checkpoint 1-2 timeframe) | Checkpoint 3 |
-| 4      | Knowledge Representation, Constraints | Mid-course (Checkpoint 3 timeframe) | Checkpoint 4 |
-| 5      | Data Visualization | Late course (Checkpoint 4-5 timeframe) | Checkpoint 5 |
+| Module | Required Topic(s) | Topic Covered By | Development Time | Checkpoint Due |
+| ------ | ----------------- | ---------------- | ---------------- | -------------- |
+| 1      | Search (A*, Beam Search) | Week 1-2 of course | 2-3 weeks | Checkpoint 1 |
+| 2      | NLP (Sentiment Analysis) | Week 4-6 of course | 2-3 weeks | Checkpoint 2 |
+| 3      | Propositional Logic (Knowledge Bases, Inference) | Week 2-4 of course | 2-3 weeks | Checkpoint 3 |
+| 4      | Knowledge Representation, Constraint Satisfaction | Week 5-7 of course | 2-3 weeks | Checkpoint 4 |
+| 5      | Explainable AI, Knowledge Representation | Week 8-10 of course | 2-3 weeks | Checkpoint 5 |
 
 ## Coverage Rationale
 
-The selected topics—Search, NLP, and Propositional Logic—naturally align with the emotion-based trading domain. Search algorithms are essential for efficiently retrieving relevant financial news from large databases, making A* and beam search ideal for prioritizing articles by relevance. NLP directly addresses the core challenge of extracting emotional signals (fear, greed, optimism) from unstructured text, which is fundamental to the system's purpose. Propositional Logic provides a rigorous framework for encoding risk management rules and trading constraints, enabling transparent and verifiable decision-making.
+The selected topics—Search, NLP, Propositional Logic, Knowledge Representation, Constraint Satisfaction, and Explainable AI—naturally align with the emotion-based trading domain. Search algorithms are essential for efficiently retrieving relevant financial news from large databases, making A* and beam search ideal for prioritizing articles by relevance. NLP directly addresses the core challenge of extracting emotional signals (fear, greed, optimism) from unstructured text, which is fundamental to the system's purpose. Propositional Logic provides a rigorous framework for encoding risk management rules and trading constraints, enabling transparent and verifiable decision-making.
 
-The integration of these topics creates a cohesive pipeline: search finds information, NLP interprets human emotion, and logic applies structured reasoning. This combination demonstrates how different AI paradigms can complement each other in a real-world application. Trade-offs considered: Machine Learning could predict sentiment more accurately but would reduce interpretability; Reinforcement Learning could optimize trading strategies but requires more complex state spaces. The chosen approach prioritizes transparency and rule-based reasoning, which is critical in financial applications where decision explanations matter. The system balances sophistication (non-trivial search, advanced NLP) with clarity (explicit logical rules), making it both technically interesting and practically applicable.
+Knowledge Representation and Constraint Satisfaction are central to Module 4: the validator represents trading constraints as formal knowledge structures and solves constraint satisfaction problems (checking if trading recommendations satisfy all operational constraints simultaneously). Explainable AI is essential for Module 5: in financial applications, users must understand why the AI made specific decisions, requiring techniques to trace logic rule applications and explain decision rationale.
+
+The integration of these topics creates a cohesive pipeline: search finds information, NLP interprets human emotion, logic applies structured reasoning, constraint satisfaction ensures validity, and explainable AI provides transparency. This combination demonstrates how different AI paradigms can complement each other in a real-world application. Trade-offs considered: Machine Learning could predict sentiment more accurately but would reduce interpretability; Reinforcement Learning could optimize trading strategies but requires more complex state spaces. The chosen approach prioritizes transparency and rule-based reasoning, which is critical in financial applications where decision explanations matter. The system balances sophistication (non-trivial search, advanced NLP) with clarity (explicit logical rules, interpretable explanations), making it both technically interesting and practically applicable.
