@@ -1,94 +1,83 @@
-# [Your System Title]
+# AI-Powered Emotion-Based Trading Assistant
 
 ## System Overview
 
-_A concise description (250 words max) of what your complete system will do and why the chosen theme is appropriate for exploring AI concepts._
+The AI-Powered Emotion-Based Trading Assistant is an intelligent system that leverages sentiment analysis and logical reasoning to make data-driven financial trading decisions. The system processes financial news and social media content to extract emotional signals (fear, greed, optimism) and market indicators, then applies risk management rules to generate trading recommendations.
+
+The system operates through five integrated modules: a search module that retrieves relevant financial news articles for specific stocks, an NLP module that analyzes sentiment and extracts emotional indicators, a logic-based reasoning module that applies risk management rules, a decision module that validates and formats trading signals, and a reporting module that visualizes results. This theme is ideal for exploring AI concepts because it naturally combines multiple AI techniques—search algorithms for information retrieval, natural language processing for understanding human emotion in text, and propositional logic for encoding financial rules and constraints. The domain of finance provides a concrete, measurable application where AI decisions have clear outcomes, making it an excellent testbed for understanding how different AI approaches can work together in a real-world system.
 
 ## Modules
 
-### Module 1: [Title]
+### Module 1: Financial News Search
 
-**Topics:** _Course topic(s) covered_
+**Topics:** Search (Uniform Cost, A*, Beam Search)
 
-**Input:** _Clear specification of what this module receives_
+**Input:** A list of stock symbols (e.g., `["AAPL", "MSFT", "GOOGL"]`) and optional date range parameters. The module receives these as a JSON object: `{stocks: ["AAPL", "MSFT"], start_date: "2024-01-01", end_date: "2024-01-31"}`.
 
-**Output:** _Clear specification of what this module produces_
+**Output:** A collection of relevant news articles in structured format. Each article is represented as: `{stock: "AAPL", title: "Article Title", content: "Full article text...", source: "Financial Times", date: "2024-01-15", relevance_score: 0.85}`. The output is a JSON array of article objects, sorted by relevance score.
 
-**Integration:** _How this module connects to the larger system_
+**Integration:** This module serves as the data collection layer. Its output feeds directly into Module 2 (NLP/Sentiment Analysis), which processes the article content to extract emotional signals. The search module uses informed search algorithms (A* or beam search) to efficiently find the most relevant articles from financial news APIs/databases, prioritizing articles with high relevance to the specified stocks.
 
-**Prerequisites:** _Prior modules or course content required_
-
----
-
-### Module 2: [Title]
-
-**Topics:** _Course topic(s) covered_
-
-**Input:** _Clear specification of what this module receives_
-
-**Output:** _Clear specification of what this module produces_
-
-**Integration:** _How this module connects to the larger system_
-
-**Prerequisites:** _Prior modules or course content required_
+**Prerequisites:** Course content on search algorithms (A*, beam search, heuristics). No prior modules required as this is the entry point of the system.
 
 ---
 
-### Module 3: [Title]
+### Module 2: Sentiment and Emotion Analysis
 
-**Topics:** _Course topic(s) covered_
+**Topics:** Natural Language Processing (NLP)
 
-**Input:** _Clear specification of what this module receives_
+**Input:** News articles from Module 1 in the format: `[{stock: "AAPL", title: "...", content: "...", ...}, ...]`. The module processes the `title` and `content` fields of each article.
 
-**Output:** _Clear specification of what this module produces_
+**Output:** Sentiment scores and emotional indicators for each article. Output format: `{stock: "AAPL", article_id: 1, fear: 0.3, greed: 0.7, optimism: 0.8, bullish: true, bearish: false, confidence: 0.85}`. The scores are normalized floats between 0.0 and 1.0, where higher values indicate stronger presence of that emotion. The `bullish`/`bearish` flags are boolean market indicators.
 
-**Integration:** _How this module connects to the larger system_
+**Integration:** This module transforms raw text into structured emotional data that Module 3 (Logic/Reasoning) can process. The sentiment scores serve as inputs to propositional logic rules that determine trading actions. The module aggregates sentiment across multiple articles per stock to produce overall sentiment profiles that inform risk management decisions.
 
-**Prerequisites:** _Prior modules or course content required_
-
----
-
-### Module 4: [Title]
-
-**Topics:** _Course topic(s) covered_
-
-**Input:** _Clear specification of what this module receives_
-
-**Output:** _Clear specification of what this module produces_
-
-**Integration:** _How this module connects to the larger system_
-
-**Prerequisites:** _Prior modules or course content required_
+**Prerequisites:** Course content on NLP (text preprocessing, sentiment analysis, language models). Requires Module 1 output as input.
 
 ---
 
-### Module 5: [Title]
+### Module 3: Risk Management Rule Engine
 
-**Topics:** _Course topic(s) covered_
+**Topics:** Propositional Logic (Knowledge Bases, Inference, CNF, Resolution)
 
-**Input:** _Clear specification of what this module receives_
+**Input:** Aggregated sentiment data from Module 2 in format: `{stock: "AAPL", avg_fear: 0.4, avg_greed: 0.6, avg_optimism: 0.7, bullish_count: 5, bearish_count: 2}`. Also receives current portfolio state: `{cash_available: 10000, current_positions: {AAPL: 100}}` and risk parameters: `{max_position_size: 0.2, fear_threshold: 0.7, optimism_threshold: 0.6}`.
 
-**Output:** _Clear specification of what this module produces_
+**Output:** Structured trading recommendations: `{action: "buy", stock: "AAPL", quantity: 10, reason: "high_optimism", confidence: 0.75}` or `{action: "sell", stock: "MSFT", quantity: 5, reason: "fear_threshold_exceeded", confidence: 0.85}`. The `reason` field encodes which logical rule fired (e.g., "high_optimism", "fear_threshold_exceeded", "risk_limit_reached").
 
-**Integration:** _How this module connects to the larger system_
+**Integration:** This module applies propositional logic rules encoded as knowledge base clauses. Example rules: "IF avg_fear > fear_threshold AND current_position > 0 THEN sell", "IF avg_optimism > optimism_threshold AND cash_available > min_trade THEN buy". The logical inference engine evaluates these rules against the sentiment inputs to produce actionable trading signals that Module 4 validates and formats.
 
-**Prerequisites:** _Prior modules or course content required_
+**Prerequisites:** Course content on Propositional Logic (entailment, knowledge bases, inference methods, CNF, resolution). Requires Module 2 output as input.
+
+---
+
+### Module 4: Trading Decision Validator
+
+**Topics:** Knowledge Representation, Constraint Satisfaction
+
+**Input:** Trading recommendations from Module 3: `{action: "buy", stock: "AAPL", quantity: 10, reason: "high_optimism", confidence: 0.75}`. Also receives validation constraints: `{max_trade_value: 5000, min_confidence: 0.6, trading_hours: true, account_balance: 10000}`.
+
+**Output:** Validated and formatted trading orders: `{order_id: "ORD001", action: "buy", stock: "AAPL", quantity: 10, price_limit: null, timestamp: "2024-01-15T10:30:00", status: "approved"}` or `{order_id: "ORD002", action: "buy", stock: "MSFT", quantity: 0, status: "rejected", reason: "insufficient_funds"}`. The module ensures all orders meet financial and operational constraints before finalization.
+
+**Integration:** This module acts as a safety layer between the logic engine and execution. It validates that recommendations from Module 3 are executable (sufficient funds, within trading hours, meet confidence thresholds) and formats them into standardized order structures. Validated orders are passed to Module 5 for reporting and visualization, completing the decision pipeline.
+
+**Prerequisites:** Course content on Knowledge Representation and constraint satisfaction. Requires Module 3 output as input.
 
 ---
 
-### Module 6: [Title] _(optional)_
+### Module 5: Trading Results Reporter
 
-**Topics:** _Course topic(s) covered_
+**Topics:** Data Visualization, Information Presentation
 
-**Input:** _Clear specification of what this module receives_
+**Input:** Validated trading orders from Module 4: `[{order_id: "ORD001", action: "buy", stock: "AAPL", quantity: 10, status: "approved", ...}, ...]`. Also receives historical context: sentiment scores from Module 2, logic reasoning traces from Module 3, and order execution results.
 
-**Output:** _Clear specification of what this module produces_
+**Output:** Formatted reports and visualizations. Text report format: `{summary: "Generated 3 buy orders, 1 sell order", orders: [...], sentiment_summary: {...}, risk_assessment: "moderate"}`. Visualization outputs include charts (sentiment trends over time, order distribution by stock, confidence scores) and tables (order history, sentiment breakdowns). Output formats: JSON for programmatic access, HTML/PDF for human-readable reports.
 
-**Integration:** _How this module connects to the larger system_
+**Integration:** This module provides the user interface layer of the system, presenting the results of the entire pipeline in an interpretable format. It aggregates data from Modules 2, 3, and 4 to create comprehensive reports that explain why trading decisions were made, what sentiment signals triggered them, and what the expected outcomes are. This completes the feedback loop, allowing users to understand and refine the system's decision-making process.
 
-**Prerequisites:** _Prior modules or course content required_
+**Prerequisites:** Course content on data visualization and information presentation. Requires outputs from Modules 2, 3, and 4.
 
 ---
+
 
 ## Feasibility Study
 
@@ -96,13 +85,14 @@ _A timeline showing that each module's prerequisites align with the course sched
 
 | Module | Required Topic(s) | Topic Covered By | Checkpoint Due |
 | ------ | ----------------- | ---------------- | -------------- |
-| 1      |                   |                  |                |
-| 2      |                   |                  |                |
-| 3      |                   |                  |                |
-| 4      |                   |                  |                |
-| 5      |                   |                  |                |
-| 6      |                   |                  |                |
+| 1      | Search (A*, Beam Search) | Early in course (Checkpoint 1 timeframe) | Checkpoint 1 |
+| 2      | NLP (Sentiment Analysis) | Mid-course (Checkpoint 2-3 timeframe) | Checkpoint 2 |
+| 3      | Propositional Logic (Knowledge Bases, Inference) | Early-mid course (Checkpoint 1-2 timeframe) | Checkpoint 3 |
+| 4      | Knowledge Representation, Constraints | Mid-course (Checkpoint 3 timeframe) | Checkpoint 4 |
+| 5      | Data Visualization | Late course (Checkpoint 4-5 timeframe) | Checkpoint 5 |
 
 ## Coverage Rationale
 
-_Brief justification for your choice of topics. Why do these topics fit your theme? What trade-offs did you consider?_
+The selected topics—Search, NLP, and Propositional Logic—naturally align with the emotion-based trading domain. Search algorithms are essential for efficiently retrieving relevant financial news from large databases, making A* and beam search ideal for prioritizing articles by relevance. NLP directly addresses the core challenge of extracting emotional signals (fear, greed, optimism) from unstructured text, which is fundamental to the system's purpose. Propositional Logic provides a rigorous framework for encoding risk management rules and trading constraints, enabling transparent and verifiable decision-making.
+
+The integration of these topics creates a cohesive pipeline: search finds information, NLP interprets human emotion, and logic applies structured reasoning. This combination demonstrates how different AI paradigms can complement each other in a real-world application. Trade-offs considered: Machine Learning could predict sentiment more accurately but would reduce interpretability; Reinforcement Learning could optimize trading strategies but requires more complex state spaces. The chosen approach prioritizes transparency and rule-based reasoning, which is critical in financial applications where decision explanations matter. The system balances sophistication (non-trivial search, advanced NLP) with clarity (explicit logical rules), making it both technically interesting and practically applicable.
